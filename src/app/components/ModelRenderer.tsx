@@ -1,13 +1,15 @@
-'use client'
+"use client";
 
 import { ObjectMap, useFrame, useLoader } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { Mesh } from "three/src/objects/Mesh.js";
 
-type Props = {};
+type Props = {
+  src: string;
+};
 
-export const ModelRenderer = ({}: Props) => {
+export const ModelRenderer = ({ src }: Props) => {
   const modelRef = useRef<Mesh>(null);
   const frameCount = useRef(0);
   const [animate, setAnimate] = useState<boolean>(true);
@@ -22,7 +24,7 @@ export const ModelRenderer = ({}: Props) => {
     return data;
   };
 
-  const gltf = typeGard(useLoader(GLTFLoader, `/imgs/rain.glb`));
+  const gltf = typeGard(useLoader(GLTFLoader, src));
 
   useFrame(async () => {
     if (animate) {
