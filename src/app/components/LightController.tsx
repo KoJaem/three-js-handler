@@ -1,10 +1,14 @@
 import React from "react";
 
-export const LightController = () => (
+interface Props {
+  lightIntensity: number;
+}
+
+export const LightController = ({ lightIntensity }: Props) => (
   <>
-    <ambientLight intensity={0.4} />
+    <ambientLight intensity={lightIntensity} />
     <hemisphereLight />
-    <spotLight position={[20, 20, 10]} intensity={4} />
+    {/* <spotLight position={[20, 20, 10]} intensity={4} /> */}
   </>
 );
 
