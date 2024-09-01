@@ -7,9 +7,10 @@ import { Mesh } from "three/src/objects/Mesh.js";
 
 type Props = {
   src: string;
+  autoAnimation?: boolean;
 };
 
-export const ModelRenderer = ({ src }: Props) => {
+export const ModelRenderer = ({ src, autoAnimation = true }: Props) => {
   const modelRef = useRef<Mesh>(null);
   const frameCount = useRef(0);
   const [animate, setAnimate] = useState<boolean>(true);
@@ -27,7 +28,7 @@ export const ModelRenderer = ({ src }: Props) => {
   const gltf = typeGard(useLoader(GLTFLoader, src));
 
   useFrame(async () => {
-    if (animate) {
+    if (animate && autoAnimation) {
       modelRef.current!.rotation.y += Math.PI / 60;
       frameCount.current += 1;
       if (frameCount.current % 60 === 0) {
@@ -39,7 +40,7 @@ export const ModelRenderer = ({ src }: Props) => {
   });
 
   return (
-    <mesh ref={modelRef} onDoubleClick={() => setAnimate(cur => !cur)}>
+    <mesh ref={modelRef}>
       <primitive object={gltf!.scene} scale={1} />
     </mesh>
   );
